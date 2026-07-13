@@ -19,8 +19,3 @@ export type TUserResponseData = Omit<IUser,'password'>;
 
 
 
-export interface IJwtPayload {
-    id:number;
-    name:string;
-    role:TUserRole;
-}

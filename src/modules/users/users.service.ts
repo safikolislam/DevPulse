@@ -18,6 +18,14 @@ const createUserIntoDB = async (userData: IUser): Promise<TUserResponseData> => 
   return result.rows[0]
 }
 
+
+
+
+
+
+
+
 export const UsersService = {
   createUserIntoDB
+
 }
