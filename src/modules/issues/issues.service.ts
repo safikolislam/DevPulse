@@ -4,7 +4,7 @@ import type { IIssue } from "./issues.interface";
 
 
 
-const createIssueIntoDB = async (payload:IIssue)=>{
+export const createIssueIntoDB = async (payload:IIssue)=>{
     const {title,description,type,reporter_id} = payload;
      const result = await pool.query(
        `
@@ -23,3 +23,6 @@ const createIssueIntoDB = async (payload:IIssue)=>{
 
 
 }
+
+
+
