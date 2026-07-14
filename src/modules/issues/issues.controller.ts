@@ -1,12 +1,21 @@
-import type { NextFunction, Request, Response } from "express";
+import type { NextFunction,  Response } from "express";
+
+
 import { createIssueIntoDB, deleteIssueFromDB, getAllIssueFromDB, getSingleIssueFromDB, updateIssueIntoDB } from "./issues.service";
+import type { IAuthRequest } from "./issues.interface";
 
 
-const createIssue = async(req:Request,res:Response,next:NextFunction):Promise<void>=>{
+const createIssue = async(req:IAuthRequest,res:Response,next:NextFunction):Promise<void>=>{
     try{
     const {title,description,type} = req.body
-      const reporterId = (req as any).user?.id;
-
+      const reporterId = req.user?.id;
+ if (!reporterId) {
+       res.status(401).json({
+         success: false,
+         message: "Unauthorized access! User information missing.",
+       });
+       return;
+     }
       const issuePayload = {
         title,
         description,
@@ -26,7 +35,7 @@ const createIssue = async(req:Request,res:Response,next:NextFunction):Promise<vo
     }
 }
 
-const getAllIssues = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+const getAllIssues = async (req: IAuthRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { sort, type, status } = req.query;
 
@@ -38,7 +47,7 @@ const getAllIssues = async (req: Request, res: Response, next: NextFunction): Pr
 
     res.status(200).json({
       success: true,
-      message: "Issues retrived successfully",
+      message: "Issues retrieved successfully",
       data: result,
     });
   } catch (error) {
@@ -48,7 +57,7 @@ const getAllIssues = async (req: Request, res: Response, next: NextFunction): Pr
 
 
 
-const getSingleIssue = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+const getSingleIssue = async (req: IAuthRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
     const id = Number(req.params.id);
 
@@ -56,7 +65,7 @@ const getSingleIssue = async (req: Request, res: Response, next: NextFunction): 
 
     res.status(200).json({
       success: true,
-      message: "Issue retrived successfully",
+      message: "Issue retrieved successfully",
       data: result,
     });
   } catch (error) {
@@ -65,7 +74,7 @@ const getSingleIssue = async (req: Request, res: Response, next: NextFunction): 
 };
 
 
-const updateIssue = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+const updateIssue = async (req: IAuthRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
     const id = Number(req.params.id);
     const { title, description, type } = req.body;
@@ -88,7 +97,7 @@ const updateIssue = async (req: Request, res: Response, next: NextFunction): Pro
 };
 
 
-const deleteIssue = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+const deleteIssue = async (req: IAuthRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
     const id = Number(req.params.id);
     const requestUser = (req as any).user;
