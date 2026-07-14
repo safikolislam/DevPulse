@@ -21,9 +21,9 @@ const auth = () => {
            
             const userData = await pool.query(
                 `
-                SELECT * FROM users WHERE email=$1
+                SELECT * FROM users WHERE id=$1
                 `,
-                [decoded.email]
+                [decoded.id]
             );
 
             const user = userData.rows[0];
@@ -41,7 +41,7 @@ const auth = () => {
                 id: user.id,
                 name: user.name,
                 role: user.role,
-                email: user.email,
+            
             };
 
             next();
