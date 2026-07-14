@@ -49,6 +49,7 @@ const loginUserIntoDB = async (payload: {
       config.jwt_secret || "super_secret_jwt_key",
       { expiresIn: "1d" }
     );
+<<<<<<< HEAD
 const refreshToken = jwt.sign(
       jwtPayload,
       config.jwt_secret || config.jwt_secret || "super_secret_jwt_key",
@@ -58,6 +59,12 @@ const refreshToken = jwt.sign(
     return {
       token,
       refreshToken,
+=======
+
+  
+    return {
+      token,
+>>>>>>> 8f9ce270622752d6aebd965f956ee1039b65f770
       user: {
         id: user.id,
         name: user.name,
