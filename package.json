@@ -4,10 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+
     "start": "node dist/server.js",
     "dev": "tsx watch ./src/server.ts",
-    "build": "tsup",
+    "build": "tsup src/server.ts --format esm --clean",
     "test": "echo \"Error: no test specified\" && exit 1"
+  
   },
   "keywords": [],
   "author": "",
